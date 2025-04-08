@@ -164,7 +164,7 @@ footer {
   object-fit: cover;
   border-radius: 5px;
   width: 300px;
-  height: 300px;
+  aspect-ratio: 4/4;
 }
 .detailed-card .card-content h2 a,
 .detailed-card .origin-location a,
