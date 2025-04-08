@@ -56,12 +56,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     let backButton = getElementById("goBack");
-    if (backButton) {
-        backButton.addEventListener("click", () => {
-            localStorage.removeItem("characterId");
-            window.location.href = "index.html";
-        });
-    }
+    let navLogo = getElementById("nav_logo");
+    [navLogo, backButton].forEach(el => {
+        if (el) {
+            el.addEventListener("click", () => {
+                localStorage.removeItem("characterId");
+                window.location.href = "index.html";
+            });
+        }
+    });
 });
 
 function getElementById(id) {
@@ -92,7 +95,7 @@ let fetchCharacters = async () => {
         let randomBtn = getElementById("randomCharacterBtn");
         if (randomBtn) {
             randomBtn.addEventListener("click", async () => {
-                if(randomBtn.disabled) return;
+                if (randomBtn.disabled) return;
 
                 randomBtn.disabled = true;
                 try {
