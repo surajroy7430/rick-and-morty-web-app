@@ -92,9 +92,12 @@ let fetchCharacters = async () => {
         let randomBtn = getElementById("randomCharacterBtn");
         if (randomBtn) {
             randomBtn.addEventListener("click", async () => {
+                if(randomBtn.disabled) return;
+
+                randomBtn.disabled = true;
                 try {
                     let totalCharacters = 826;
-                    let randomId = Math.floor(Math.random() * totalCharacters);
+                    let randomId = Math.floor(Math.random() * totalCharacters) + 1;
 
                     let res = await fetch(`${baseUrl}/${randomId}`);
                     let data = await res.json();
@@ -104,8 +107,12 @@ let fetchCharacters = async () => {
                 } catch (error) {
                     listMsg.textContent = error.message;
                     listMsg.style.color = "red";
+                } finally {
+                    setTimeout(() => {
+                        randomBtn.disabled = false;
+                    }, 1000);
                 }
-            })
+            });
         }
     }
     else {
@@ -225,7 +232,7 @@ function showCharacterDetails(characters) {
     }
 
     let char = characters[0];
-    let statusColor = char.status === "Alive" ? "green" : char.status === "Dead" ? "red" : "gray";
+    let statusColor = char.status === "Alive" ? "#16a34a" : char.status === "Dead" ? "#dc2626" : "gray";
 
     details.innerHTML = `
         <div class="detailed-card">
@@ -236,8 +243,8 @@ function showCharacterDetails(characters) {
                     <small> (${char.gender})</small>
                 </h2>
                 <p class="statusAndSpecies">
-                    <span class="status-icon" style="background-color: ${statusColor};"></span>
-                    ${char.status} - ${char.species}
+                    <strong style="color: ${statusColor};">${char.status}</strong>
+                    <span> - ${char.species}</span>
                 </p>
                 <div class="origin-location">
                     <p>Origin Location:</p>
